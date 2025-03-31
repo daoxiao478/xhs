@@ -2,7 +2,7 @@
 
 一个基于 Nuxt.js 3 开发的小红书工具网站，提供视频下载和其他实用功能。
 
-<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=114258075452655&bvid=BV1HMZsYoEtg&cid=29172302243&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+[视频教程](https://www.bilibili.com/video/BV1HMZsYoEtg)
 
 ## 🚀 功能特性
 

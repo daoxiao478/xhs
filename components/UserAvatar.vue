@@ -12,11 +12,6 @@ const props = withDefaults(defineProps<Props>(), {
   showUsername: true
 })
 
-const toUserDetail = () => {
-  const url = `/users/${props.userId}?xsec_token=${props.xsecToken}`
-  // router.push(url)
-}
-
 </script>
 
 <template>

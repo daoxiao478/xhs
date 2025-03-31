@@ -51,8 +51,8 @@ import { Label } from '@/components/ui/label'
 import { useSettingsStore } from '@/stores/settings'
 import { useToast } from '@/components/ui/toast/use-toast'
 
-const settingsStore = useSettingsStore()
 const { toast } = useToast()
+const settingsStore = useSettingsStore()
 
 const proxyUrl = ref(settingsStore.proxyUrl)
 const downloadProxyUrls = ref([...settingsStore.downloadProxyUrls])

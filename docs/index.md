@@ -11,7 +11,7 @@ hero:
       link: /guide/getting-started
     - theme: alt
       text: 在 GitHub 上查看
-      link: https://github.com/xiaoxiunique/xhs
+    link: https://github.com/xiaoxiunique/xhs
 
 features:
   - icon: 🚀
