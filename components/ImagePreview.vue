@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Image from 'nuxt/image'
 import { ref } from 'vue'
 
 interface Props {

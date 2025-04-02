@@ -8,8 +8,7 @@ export default defineNuxtConfig({
     '@nuxt/fonts',
     '@nuxt/icon',
     '@nuxt/image',
-    '@nuxtjs/tailwindcss',
-    'dayjs-nuxt',
+    '@nuxtjs/tailwindcss', 'dayjs-nuxt',
     '@pinia/colada-nuxt',
     'nuxt-og-image',
     '@nuxtjs/seo',
@@ -32,5 +31,8 @@ export default defineNuxtConfig({
     configPath: 'tailwind.config.js',
     exposeConfig: false,
     viewer: true,
+  },
+  nitro: {
+    preset: "bun"
   }
 })
