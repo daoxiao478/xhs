@@ -17,16 +17,21 @@ export const useUserStore = defineStore("user", () => {
     }
 
     loading.value = true;
-
-    const res = await $fetch<ApiSnsWebV1UserPostedGet200ResponseData>(`/api/proxy/users/${id}`, {
+    const res = await $fetch<{
+      data: ApiSnsWebV1UserPostedGet200ResponseData;
+    }>(`/api/edith/sns/web/v1/user_posted`, {
       method: "GET",
       query: {
-        xsecToken,
+        num: 30,
         cursor: currentCursor.value,
+        user_id: id,
+        image_formats: "jpg,webp,avif",
+        xsec_token: xsecToken,
+        xsec_source: "pc_note"
       },
     });
 
-    notes.value = res.notes.map((note) => {
+    notes.value = res.data.notes.map((note) => {
       return {
         id: note.note_id,
         xsec_token: note.xsec_token,
@@ -37,8 +42,8 @@ export const useUserStore = defineStore("user", () => {
         is_video: note.type === "video",
       };
     });
-    currentCursor.value = res.cursor;
-    hasMore.value = res.has_more;
+    currentCursor.value = res.data.cursor;
+    hasMore.value = res.data.has_more;
     loading.value = false;
   }
 

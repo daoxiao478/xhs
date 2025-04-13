@@ -37,15 +37,15 @@
     </div>
 
     <!-- 搜索结果表格 -->
-    <div v-if="posts.length > 0" class="bg-white p-6 rounded-lg">
+    <div v-if="posts.items.length > 0" class="bg-white p-6 rounded-lg">
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-xl font-semibold">搜索结果</h2>
-        <Button @click="handleExportPosts" :disabled="isExporting">
+        <!-- <Button @click="handleExportPosts" :disabled="isExporting">
           {{ isExporting ? '导出中...' : '导出' }}
-        </Button>
+        </Button> -->
       </div>
 
-      <PostTable :posts="posts" :has-more-posts="hasMorePosts" :is-loading-more="isLoadingMore"
+      <PostTable :posts="posts.items" :has-more-posts="hasMorePosts" :is-loading-more="isLoadingMore"
         @load-more="loadMorePosts" />
     </div>
 
@@ -107,7 +107,7 @@ const isExporting = ref(false)
 
 async function handleExportPosts() {
   isExporting.value = true
-  await exportPosts(posts.value.map(post => ({
+  await exportPosts(posts.value.items.map(post => ({
     id: post.id,
     xsec_token: post.xsec_token
   })))

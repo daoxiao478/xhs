@@ -55,7 +55,7 @@
     <div class="bg-white p-6 rounded-lg">
       <div class="flex items-center justify-between mb-4">
         <span class="text-lg font-semibold">评论列表</span>
-        <Button variant="outline" @click="handleExport" :disabled="loading">导出</Button>
+        <!-- <Button variant="outline" @click="handleExport" :disabled="loading">导出</Button> -->
       </div>
       <template v-if="!commentsStore.loading && commentsStore.comments.length > 0">
         <CommentTable :comments="commentsStore.comments" :has-more="commentsStore.hasMore" :is-loading="d.l"

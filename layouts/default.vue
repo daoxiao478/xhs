@@ -1,16 +1,26 @@
 <script setup lang="ts">
 import { useAuthStore } from '~/stores/auth'
 const authStore = useAuthStore()
+const route = useRoute()
 </script>
 <template>
   <div class="min-h-screen font-inter bg-gray-50 flex flex-col">
     <header class="bg-white/80 backdrop-blur-sm border-gray-200 sticky top-0 z-10">
       <div class="container mx-auto px-4 py-2 flex items-center justify-between">
-        <NuxtLink to="/" class="flex items-center space-x-2">
-          <img src="/logo.jpeg" alt="小红书 Logo" class="h-12 w-auto" />
-          <span class="text-gray-600 text-sm">小红书搜索与导出工具</span>
-        </NuxtLink>
 
+        <div class="flex items-center space-x-8">
+          <NuxtLink to="/" class="flex items-center space-x-2">
+            <img src="/logo.jpeg" alt="小红书 Logo" class="h-12 w-auto" />
+            <span class="text-gray-600 text-sm">小红书搜索与导出工具</span>
+          </NuxtLink>
+
+          <div class="flex items-center space-x-4 text-gray-600 text-sm ">
+            <NuxtLink to="/" class="text-gray-600 text-sm hover:text-red-600 transition-colors"
+              :class="{ 'text-red-600': route.path === '/' }"> 首页</NuxtLink>
+            <NuxtLink to="/accounts" class="text-gray-600 text-sm hover:text-red-600 transition-colors"
+              :class="{ 'text-red-600': route.path === '/accounts' }"> 账号管理</NuxtLink>
+          </div>
+        </div>
         <div class="flex items-center space-x-10">
           <div class="flex items-center space-x-4">
             <a href="https://x.com/2ah2021" target="_blank" rel="noopener noreferrer"
@@ -36,7 +46,7 @@ const authStore = useAuthStore()
               <DropdownMenuContent>
                 <DropdownMenuLabel>{{ authStore.userInfo?.nickname }}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem @click="navigateTo('/settings')">设置</DropdownMenuItem>
+                <!-- <DropdownMenuItem @click="navigateTo('/settings')">设置</DropdownMenuItem> -->
                 <DropdownMenuItem @click="authStore.logout()">退出</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

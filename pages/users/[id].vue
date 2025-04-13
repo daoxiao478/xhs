@@ -7,9 +7,9 @@
 
     <div class="mt-4 bg-white p-6 rounded-lg shadow-md">
       <div class="flex justify-end">
-        <Button @click="handleExportPosts" :disabled="isExporting">
+        <!-- <Button @click="handleExportPosts" :disabled="isExporting">
           {{ isExporting ? '导出中...' : '导出' }}
-        </Button>
+        </Button> -->
       </div>
       <div v-if="notes && notes.length > 0">
         <UserPostTable :posts="notes" />

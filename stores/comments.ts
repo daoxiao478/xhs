@@ -7,7 +7,9 @@ import type {
 export const useCommentsStore = defineStore("comments", () => {
   const loading = ref(true);
   const postInfo = ref<ApiSnsWebV1FeedPost200ResponseDataItemsInner>();
-  const comments = ref<ApiSnsWebV2CommentPageGet200ResponseData['comments']>([]);
+  const comments = ref<ApiSnsWebV2CommentPageGet200ResponseData["comments"]>(
+    []
+  );
   const hasMore = ref(false);
   const currentCursor = ref("");
 
@@ -26,16 +28,20 @@ export const useCommentsStore = defineStore("comments", () => {
   async function fetchPostInfo(id: string, xsecToken: string) {
     loading.value = true;
     try {
-      const res = await $fetch<ApiSnsWebV1FeedPost200ResponseData>(
-        `/api/proxy/post/${id}`,
+      const res = await $fetch<{ data: ApiSnsWebV1FeedPost200ResponseData }>(
+        `/api/edith/sns/web/v1/feed`,
         {
-          method: "GET",
-          query: {
-            xsecToken,
+          method: "POST",
+          body: {
+            source_note_id: id,
+            image_formats: ["jpg", "webp", "avif"],
+            extra: { need_body_topic: "1" },
+            xsec_source: "pc_feed",
+            xsec_token: xsecToken,
           },
         }
       );
-      postInfo.value = res.items?.[0];
+      postInfo.value = res.data.items?.[0];
     } finally {
       loading.value = false;
     }
@@ -48,23 +54,25 @@ export const useCommentsStore = defineStore("comments", () => {
     }
 
     const res = await $fetch<{
-      comments: ApiSnsWebV2CommentPageGet200ResponseData['comments'];
-      cursor: string;
-      has_more: boolean;
-    }>(
-      `/api/proxy/post/${id}/comments`,
-      {
-        method: "GET",
-        query: {
-          xsecToken,
-          cursor: currentCursor.value,
-        },
+      data: {
+        comments: ApiSnsWebV2CommentPageGet200ResponseData["comments"];
+        cursor: string;
+        has_more: boolean;
+      };
+    }>(`/api/edith/sns/web/v2/comment/page`, {
+      method: "GET",
+      query: {
+        note_id: id,
+        cursor: currentCursor.value,
+        top_comment_id: "",
+        image_formats: ["jpg", "webp", "avif"],
+        xsec_token: xsecToken,
       }
-    );
+    });
 
-    comments.value = [...comments.value, ...res.comments];
-    currentCursor.value = res.cursor;
-    hasMore.value = res.has_more;
+    comments.value = [...comments.value, ...res.data.comments];
+    currentCursor.value = res.data.cursor;
+    hasMore.value = res.data.has_more;
   }
 
   return {

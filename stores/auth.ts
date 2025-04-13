@@ -1,6 +1,6 @@
-import { useToast } from '@/components/ui/toast/use-toast'
+import { useToast } from "@/components/ui/toast/use-toast";
 
-const { toast } = useToast()
+const { toast } = useToast();
 
 export const useAuthStore = defineStore("auth", () => {
   const qrCode = ref("");
@@ -21,30 +21,11 @@ export const useAuthStore = defineStore("auth", () => {
     qrCode.value = await $fetch("/api/proxy/code_base64?t=" + Date.now());
   }
 
-  async function checkLogin() {
-    const status = await $fetch<{ isLogin: boolean }>("/api/proxy/is_login");
-    if (status.isLogin) {
-      try {
-        const data = await $fetch<{
-          data: { user_id: string; nickname: string; images: string };
-        }>("/api/proxy/profile");
-        userInfo.value = data.data;
-        navigateTo("/");
-      } catch (error) {
-        toast({
-          title: "登录失败",
-          description: "获取用户信息失败，请重试",
-          variant: "destructive"
-        });
-      }
-    } 
-  }
-
   async function me() {
     try {
       const data = await $fetch<{
         data: { user_id: string; nickname: string; images: string };
-      }>("/api/proxy/profile");
+      }>("/api/xhs/me");
       if (!data?.data?.user_id) {
         navigateTo("/login");
       }
@@ -66,29 +47,30 @@ export const useAuthStore = defineStore("auth", () => {
     navigateTo("/login");
   }
 
-  async function loginWithCookie(web_session: string) {
-    try {
-      const response = await $fetch("/api/proxy/cookie_login", {
+  async function loginWithCookie(ck: string) {
+    const response = await $fetch<{ success: boolean; message: string }>(
+      "/api/xhs/ck",
+      {
         method: "POST",
-        body: { web_session }
-      });
-      
-      if (response) {
-        await me();
-        navigateTo("/");
-        toast({
-          title: "登录成功",
-          description: "Cookie 登录成功",
-        });
+        body: { ck },
       }
-    } catch (error) {
+    );
+
+    if (response.success) {
+      await me();
+      navigateTo("/");
       toast({
-        title: "登录失败",
-        description: "Cookie 无效或已过期",
-        variant: "destructive"
+        title: "登录成功",
+        description: "Cookie 登录成功",
       });
-      throw error;
+      return;
     }
+
+    toast({
+      title: "登录失败",
+      description: "Cookie 无效或已过期",
+      variant: "destructive",
+    });
   }
 
   return {
@@ -97,7 +79,6 @@ export const useAuthStore = defineStore("auth", () => {
     userInfo,
     getQRCode,
     refreshQRCode,
-    checkLogin,
     logout,
     loginWithCookie,
   };
