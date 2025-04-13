@@ -4,14 +4,12 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   modules: [
-    '@nuxt/content',
     '@nuxt/fonts',
     '@nuxt/icon',
     '@nuxt/image',
-    '@nuxtjs/tailwindcss', 'dayjs-nuxt',
+    '@nuxtjs/tailwindcss', 
+    'dayjs-nuxt',
     '@pinia/colada-nuxt',
-    'nuxt-og-image',
-    '@nuxtjs/seo',
     '@pinia/nuxt',
     'shadcn-nuxt'
   ],
@@ -33,6 +31,6 @@ export default defineNuxtConfig({
     viewer: true,
   },
   nitro: {
-    preset: "bun"
+    preset: "vercel_edge"
   }
 })

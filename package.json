@@ -18,7 +18,6 @@
     "@nuxt/fonts": "0.11.0",
     "@nuxt/icon": "1.11.0",
     "@nuxt/image": "1.10.0",
-    "@nuxtjs/seo": "3.0.1",
     "@nuxtjs/tailwindcss": "6.13.2",
     "@pinia/colada": "^0.14.2",
     "@pinia/colada-nuxt": "0.1.1",
